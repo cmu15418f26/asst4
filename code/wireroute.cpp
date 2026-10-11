@@ -162,10 +162,12 @@ int main(int argc, char *argv[]) {
       fin >> dim_x >> dim_y >> num_wires;
 
       wires.resize(num_wires);
-      for (auto& wire : wires) {
+      for (auto &wire : wires) {
         fin >> wire.start_x >> wire.start_y >> wire.end_x >> wire.end_y;
-        wire.bend1_x = wire.start_x;
-        wire.bend1_y = wire.start_y;
+        wire.move_x_start = true;
+        wire.move_x_end = false;
+        wire.mid_x = wire.end_x;
+        wire.mid_y = wire.start_y;
       }
   }
 
@@ -191,9 +193,12 @@ int main(int argc, char *argv[]) {
   }
 
   if (pid == 0) {
+    wr_checker checker(wires, occupancy);
+    checker.validate();
+
     /* Write wires and occupancy matrix to files */
     print_stats(occupancy);
-    write_output(wires, num_wires, occupancy, dim_x, dim_y, nproc, input_filename);
+    write_output(wires, num_wires, occupancy, dim_x, dim_y);
   }
 
   // Cleanup

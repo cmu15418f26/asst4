@@ -9,7 +9,7 @@
 #include <cstdint>
 #include <vector>
 
-#define MAX_PTS_PER_WIRE 4
+#define MAX_PTS_PER_WIRE 5
 #define COST_REPORT_DEPTH 10
 
 /** README(student):
